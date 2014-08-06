@@ -6,3 +6,10 @@
 
 # R data files from past sessions
 .Rdata
+.Rproj.user
+
+# Rstudio project
+rnaxqc.Rproj
+
+# data directory with sample dataset
+data/
