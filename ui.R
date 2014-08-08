@@ -17,7 +17,14 @@ shinyUI(fluidPage(theme="bootstrap.min.css",
                         tabPanel("Density"),
                         tabPanel("Heatmap"),
                         tabPanel("MA plot"),
-                        tabPanel("PCA")
+                        tabPanel("PCA",
+                                 fluidRow(
+                                   column(6),
+                                   column(6)),
+                                 fluidRow(
+                                   column(6),
+                                   column(6))
+                                 )
                         )
           )
         )
