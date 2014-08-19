@@ -1,9 +1,19 @@
 library(shiny)
-#library(ggplot2)
 library(reshape)
 library(ggvis)
 
+source("arrange_ggplot2.r")
+source("vis.R")
+
 shinyServer(function(input, output) {
+
+  # boxplot ###################################################################
+  output$box <- renderPlot({
+    count_table <- count_tables[[input$species]]
+    count_table$seqid <- rownames(count_table)
+    group_factor <- input$group_factor
+    boxplot.rnaxqc(count_table, design_table, group_factor)
+  })
 
   # PCA plots #################################################################
   nsamples <- nrow(pca_rot[[1]])
