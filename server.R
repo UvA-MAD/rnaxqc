@@ -4,6 +4,8 @@ library(reshape)
 library(ggvis)
 
 shinyServer(function(input, output) {
+
+  # PCA plots #################################################################
   nsamples <- nrow(pca_rot[[1]])
 
   sub_pca_rot <- reactive({
@@ -37,7 +39,6 @@ shinyServer(function(input, output) {
     sub_pca_rot()[pca_lb()$selected(), ]
   })
 
-  # PCA plots
   observe({
     sub_pca_rot %>%
       ggvis(~PC2, ~PC1, key := ~id) %>%
@@ -106,5 +107,6 @@ shinyServer(function(input, output) {
         options = list(bPaginate=FALSE, bFilter=FALSE, bSearchable=FALSE, bInfo=FALSE), {})
     }
   })
+  ## end PCA ##################################################################
 
 })
