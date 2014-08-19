@@ -13,14 +13,14 @@ boxplot.rnaxqc<- function(countTable, designTable, group_factor) {
   # grouping factors from design file
   mergedTable <- merge(moltenTable, designTable, by="sampleid")
 
-    .e <- environment()
-    p <- ggplot(mergedTable, environment=.e,
-                aes(factor(sampleid), count, fill=factor(mergedTable[, group_factor])))
-    p <- p + geom_boxplot(alpha=0.6, outlier.size=1)
-    p <- p + guides(fill=guide_legend(title=group_factor))
-    p <- p + labs(x="sample", y="counts")
-    p <- p + ggtitle(paste("grouping by", group_factor))
-    p <- p + theme(axis.text.x = element_text(angle=45, hjust=1))
+  .e <- environment()
+  ggplot(mergedTable, environment=.e,
+              aes(factor(sampleid), count, fill=factor(mergedTable[, group_factor])))
+  p <- p + geom_boxplot(alpha=0.6, outlier.size=1)
+  p <- p + guides(fill=guide_legend(title=group_factor))
+  p <- p + labs(x="sample", y="counts")
+  p <- p + ggtitle(paste("grouping by", group_factor))
+  p <- p + theme(axis.text.x = element_text(angle=45, hjust=1))
 
   return(p)
 }
