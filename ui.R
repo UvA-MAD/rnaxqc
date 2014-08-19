@@ -7,25 +7,34 @@ shinyUI(fluidPage(theme="bootstrap.min.css",
         sidebarLayout(
           sidebarPanel(
             selectInput("species", "RNA species:",
-                        c("bla")),
+                        species_list),
             selectInput("group_factor", "Color by:",
-                        c("ble"))
+                        group_factors),
+            conditionalPanel(
+              condition = "input.tabset == 'MA plot'",
+              selectInput("sampleid",
+                          "Sample: ",
+                          as.character(design_table$sampleid)
+                          )
+            ),
+            dataTableOutput("brushed_design")
           ),
           mainPanel(
-            tabsetPanel(type="tabs",
+            tabsetPanel(type="tabs", id="tabset",
                         tabPanel("Boxplot"),
                         tabPanel("Density"),
                         tabPanel("Heatmap"),
                         tabPanel("MA plot"),
                         tabPanel("PCA",
                                  fluidRow(
-                                   column(6),
-                                   column(6)),
+                                   column(6, ggvisOutput("pca21")),
+                                   column(6, ggvisOutput("pca23"))
+                                 ),
                                  fluidRow(
-                                   column(6),
-                                   column(6))
+                                   column(6, ggvisOutput("pca31")),
+                                   column(6, ggvisOutput("pca_proportion"))
                                  )
                         )
           )
         )
-))
+)))

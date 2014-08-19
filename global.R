@@ -16,6 +16,11 @@ count_tables <- lapply(count_files, function(fin) {
 
   # strip off "X" added by R in column names
   names(count_table) <- str_replace(names(count_table), "^X", "")
+
+  # calculate log2(cmp + 05)
+  # where cpm is counts per milion totall counts for species for sample
+  count_table <- log2((count_table / (colSums(count_table) / 1000000)) + 0.5)
+
   return(count_table)
 })
 
@@ -32,6 +37,8 @@ names(design_table) <- tolower(names(design_table))
 group_factors <- names(design_table)
 group_factors <- group_factors[group_factors != 'sampleid']
 
+
+## PCA ########################################################
 # run principal component analysis on all species count tables
 pca <- lapply(count_tables, prcomp)
 
@@ -47,8 +54,13 @@ pca_rot <- lapply(pca, function(species_pca) {
 })
 
 calc_proportion <- function(species_pca) {
-  data.frame(proporion = species_pca$sdev^2/sum(species_pca$sdev^2),
+  data.frame(proportion = species_pca$sdev^2/sum(species_pca$sdev^2),
              pc = 1:length(species_pca$sdev))
 }
 
-pca_proportion <- lapply(pca, calc_proportion)
+pca_prop <- lapply(pca, calc_proportion)
+
+## MA #################################################################
+ma_tables <- count_tables
+
+ma_active = FALSE
