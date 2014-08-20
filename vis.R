@@ -1,5 +1,11 @@
 library(ggplot2)
 
+sample_tooltip <- function(x) {
+  if (is.null(x)) return(NULL)
+  if (is.null(x$sampleid)) return(NULL)
+  paste0("<b>", x$sampleid, "</b>")
+}
+
 boxplot.rnaxqc<- function(count_design, group_factor) {
   .e <- environment()
   p <- ggplot(count_design, environment=.e,
@@ -11,4 +17,12 @@ boxplot.rnaxqc<- function(count_design, group_factor) {
   p <- p + theme(axis.text.x = element_text(angle=45, hjust=1))
 
   return(p)
+}
+
+densplot.rnaxqc <- function(count_design) {
+  count_design %>%
+    ggvis(~count) %>%
+    group_by(sampleid) %>%
+    layer_densities(fillOpacity := 0.01, strokeOpacity := 0.5, stroke.hover := "red") %>%
+    add_tooltip(sample_tooltip, "hover")
 }
