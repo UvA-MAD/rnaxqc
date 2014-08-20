@@ -37,8 +37,16 @@ names(design_table) <- tolower(names(design_table))
 group_factors <- names(design_table)
 group_factors <- group_factors[group_factors != 'sampleid']
 
+## boxplot ####################################################################
+# for each species melt count table and merge with design table
+count_design_molten <- lapply(count_tables, function(count_table){
+  count_table$seqid <- rownames(count_table)
+  molten_table <- melt(count_table)
+  names(molten_table) <- c("seqid", "sampleid", "count")
+  merged_table <- merge(molten_table, design_table, by="sampleid")
+})
 
-## PCA ########################################################
+## PCA ########################################################################
 # run principal component analysis on all species count tables
 pca <- lapply(count_tables, prcomp)
 
@@ -60,7 +68,7 @@ calc_proportion <- function(species_pca) {
 
 pca_prop <- lapply(pca, calc_proportion)
 
-## MA #################################################################
+## MA #########################################################################
 ma_tables <- count_tables
 
 ma_active = FALSE
