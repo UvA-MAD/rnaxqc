@@ -26,3 +26,8 @@ densplot.rnaxqc <- function(count_design, group_factor) {
     layer_densities(fillOpacity := 0.01, strokeOpacity := 0.5, stroke.hover := "red") %>%
     add_tooltip(sample_tooltip, "hover")
 }
+
+heatmap.rnaxqc <- function(counts) {
+  correlation <- cor(counts[, 2:ncol(counts)])
+  heatmap(correlation)
+}

@@ -18,6 +18,13 @@ shinyServer(function(input, output) {
     densplot.rnaxqc(species_count_design, input$group_factor) %>%
       bind_shiny("density")
   })
+
+  # heatmap ###################################################################
+  output$heatmap <- renderPlot({
+    species_counts <- count_tables[[input$species]]
+    heatmap.rnaxqc(species_counts)
+  })
+
   # PCA plots #################################################################
   nsamples <- nrow(pca_rot[[1]])
 
