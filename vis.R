@@ -19,9 +19,9 @@ boxplot.rnaxqc<- function(count_design, group_factor) {
   return(p)
 }
 
-densplot.rnaxqc <- function(count_design) {
+densplot.rnaxqc <- function(count_design, group_factor) {
   count_design %>%
-    ggvis(~count) %>%
+    ggvis(~count, stroke = ~sampleid) %>%
     group_by(sampleid) %>%
     layer_densities(fillOpacity := 0.01, strokeOpacity := 0.5, stroke.hover := "red") %>%
     add_tooltip(sample_tooltip, "hover")

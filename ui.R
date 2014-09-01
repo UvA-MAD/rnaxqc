@@ -8,14 +8,10 @@ shinyUI(fluidPage(theme="bootstrap.min.css",
           sidebarPanel(
             selectInput("species", "RNA species:",
                         species_list),
-            selectInput("group_factor", "Color by:",
-                        group_factors),
             conditionalPanel(
-              condition = "input.tabset == 'MA plot'",
-              selectInput("sampleid",
-                          "Sample: ",
-                          as.character(design_table$sampleid)
-                          )
+              condition = "input.tabset != 'Density'",
+              selectInput("group_factor", "Color by:",
+                        group_factors)
             ),
             dataTableOutput("brushed_design")
           ),

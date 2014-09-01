@@ -9,14 +9,13 @@ shinyServer(function(input, output) {
   # boxplot ###################################################################
   output$box <- renderPlot({
     species_count_design <- count_design_molten[[input$species]]
-    group_factor <- input$group_factor
-    boxplot.rnaxqc(species_count_design, group_factor)
+    boxplot.rnaxqc(species_count_design, input$group_factor)
   })
 
   # density ###################################################################
   observe({
     species_count_design <- count_design_molten[[input$species]]
-    densplot.rnaxqc(species_count_design) %>%
+    densplot.rnaxqc(species_count_design, input$group_factor) %>%
       bind_shiny("density")
   })
   # PCA plots #################################################################
