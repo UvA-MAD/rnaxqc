@@ -32,10 +32,19 @@ heatmap.rnaxqc <- function(counts) {
   heatmap(correlation)
 }
 
-maplot.rnaxqc <- function(species_ma) {
+maplot.points.rnaxqc <- function(species_ma) {
     p <- ggplot(species_ma)
     p <- p + geom_point(aes(A, M), alpha=0.05)
     p <- p + facet_wrap(~ sample_name, ncol=2)
     p <- p + labs(x="A", y="M")
     return(p)
+}
+
+maplot.hexbin.rnaxqc <- function(species_ma) {
+  p <- ggplot(species_ma, aes(A, M))
+  p <- p + stat_binhex(binwidth = c(0.5, 0.5))
+  p <- p + facet_wrap(~ sample_name, ncol=2)
+  p <- p + labs(x="A", y="M")
+  p <- p + scale_fill_gradientn(trans="log2", colours = rainbow(7))
+  return(p)
 }

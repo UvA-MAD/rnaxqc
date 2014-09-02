@@ -1,6 +1,7 @@
 library(shiny)
 library(reshape)
 library(ggvis)
+library(hexbin)
 
 source("vis.R")
 
@@ -33,7 +34,11 @@ shinyServer(function(input, output, session) {
   })
 
   output$ma <- renderPlot({
-    maplot.rnaxqc(species_ma())
+    if (input$ma_plot_type == "points") {
+      maplot.points.rnaxqc(species_ma())
+    } else {
+      maplot.hexbin.rnaxqc(species_ma())
+    }
   }, height=150*length(samples))
 
   # PCA plots #################################################################
