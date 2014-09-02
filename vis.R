@@ -27,9 +27,13 @@ densplot.rnaxqc <- function(count_design, group_factor) {
     add_tooltip(sample_tooltip, "hover")
 }
 
-heatmap.rnaxqc <- function(counts) {
+heatmap1.rnaxqc <- function(counts) {
   correlation <- cor(counts[, 2:ncol(counts)])
   heatmap(correlation)
+}
+
+heatmap2.rnaxqc <-function(counts){
+  heatmap(as.matrix(counts), cexCol=0.7, labRow=NA)
 }
 
 maplot.points.rnaxqc <- function(species_ma) {

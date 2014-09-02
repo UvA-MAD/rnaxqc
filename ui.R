@@ -24,7 +24,12 @@ shinyUI(fluidPage(theme="bootstrap.min.css",
             tabsetPanel(type="tabs", id="tabset",
                         tabPanel("Boxplot", plotOutput("box")),
                         tabPanel("Density", ggvisOutput("density")),
-                        tabPanel("Heatmap", plotOutput("heatmap")),
+                        tabPanel("Heatmap",
+                                 fluidRow(
+                                   column(6, plotOutput("heatmap1")),
+                                   column(6, plotOutput("heatmap2"))
+                                  )
+                        ),
                         tabPanel("MA plot", plotOutput("ma")),
                         tabPanel("PCA",
                                  fluidRow(

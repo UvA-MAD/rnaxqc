@@ -21,9 +21,13 @@ shinyServer(function(input, output, session) {
   })
 
   # heatmap ###################################################################
-  output$heatmap <- renderPlot({
+  output$heatmap1 <- renderPlot({
     species_counts <- count_tables[[input$species]]
-    heatmap.rnaxqc(species_counts)
+    heatmap1.rnaxqc(species_counts)
+  })
+  output$heatmap2 <- renderPlot({
+    species_counts <- count_tables[[input$species]]
+    heatmap2.rnaxqc(species_counts)
   })
 
   # ma plots ##################################################################
