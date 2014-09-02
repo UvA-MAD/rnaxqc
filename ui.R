@@ -20,7 +20,8 @@ shinyUI(fluidPage(theme="bootstrap.min.css",
                         tabPanel("Boxplot", plotOutput("box")),
                         tabPanel("Density", ggvisOutput("density")),
                         tabPanel("Heatmap", plotOutput("heatmap")),
-                        tabPanel("MA plot"),
+                        tabPanel("MA plot", lapply(letters[1:length(samples)], function(l) {
+                                                    ggvisOutput(paste0("ma_", l))})),
                         tabPanel("PCA",
                                  fluidRow(
                                    column(6, ggvisOutput("pca21")),

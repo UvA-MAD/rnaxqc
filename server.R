@@ -4,7 +4,7 @@ library(ggvis)
 
 source("vis.R")
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
 
   # boxplot ###################################################################
   output$box <- renderPlot({
@@ -25,6 +25,37 @@ shinyServer(function(input, output) {
     heatmap.rnaxqc(species_counts)
   })
 
+  # ma plots ##################################################################
+
+  species_ma <- reactive({
+    # pick for selected species
+    ma_tables[[input$species]]
+  })
+
+  ma_sample_tooltip <- function(x) {
+    if (is.null(x)) return(NULL)
+    if (is.null(x$id)) return(NULL)
+    transid <- species_ma()[[1]]$transid[x$id]
+    paste0("<b>", transid, "</b>")
+  }
+
+  observe({
+    sma <- species_ma()
+    isample <- 0
+    for (s in samples) {
+      isample <- isample + 1
+      local({
+      loc_s <- s
+      i <- isample
+      sma[[loc_s]] %>%
+        ggvis(~A, ~M, key := ~id) %>%
+        layer_points(fillOpacity:=0.1,
+                     fill.hover := "red", fillOpacity.hover := 0.7, size.hover := 150) %>%
+        add_tooltip(ma_sample_tooltip, "hover") %>%
+        bind_shiny(paste0("ma_", letters[i]), session=session)
+      })
+    }
+  })
   # PCA plots #################################################################
   nsamples <- nrow(pca_rot[[1]])
 

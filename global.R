@@ -70,6 +70,20 @@ calc_proportion <- function(species_pca) {
 pca_prop <- lapply(pca, calc_proportion)
 
 ## MA #########################################################################
-ma_tables <- count_tables
+samples <- names(count_tables[[1]])
+
+ma_tables <- lapply(count_tables, function(species_count) {
+
+  median_df <- apply(species_count, 1, median)
+  ma_list <- list()
+  for (s in samples) {
+    ma_df <- data.frame(M = species_count[[s]] - median_df,
+                        A = species_count[[s]] + median_df,
+                        transid = names(median_df),
+                        id = seq_len(length(median_df)))
+    ma_list[[s]] <- ma_df
+  }
+  return(ma_list)
+})
 
 ma_active = FALSE
