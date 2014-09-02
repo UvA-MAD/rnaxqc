@@ -83,5 +83,6 @@ ma_tables <- lapply(count_tables, function(species_count) {
                         sample_name = s)
     ma_list[[s]] <- ma_df
   }
-  return(ma_list)
+  species_ma <- do.call("rbind", ma_list)
+  return(species_ma)
 })

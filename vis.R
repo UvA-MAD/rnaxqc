@@ -33,8 +33,7 @@ heatmap.rnaxqc <- function(counts) {
 }
 
 maplot.rnaxqc <- function(species_ma) {
-    df <- do.call("rbind", species_ma)
-    p <- ggplot(df)
+    p <- ggplot(species_ma)
     p <- p + geom_point(aes(A, M), alpha=0.05)
     p <- p + facet_wrap(~ sample_name, ncol=2)
     p <- p + labs(x="A", y="M")
