@@ -13,6 +13,11 @@ shinyUI(fluidPage(theme="bootstrap.min.css",
               selectInput("group_factor", "Color by:",
                         group_factors)
             ),
+            conditionalPanel(
+              condition = "input.tabset == 'MA plot'",
+              selectInput("ma_plot_type", "Choose plot type:",
+                          c('points', 'hexbin'))
+            ),
             dataTableOutput("brushed_design")
           ),
           mainPanel(
