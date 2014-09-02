@@ -31,3 +31,12 @@ heatmap.rnaxqc <- function(counts) {
   correlation <- cor(counts[, 2:ncol(counts)])
   heatmap(correlation)
 }
+
+maplot.rnaxqc <- function(species_ma) {
+    df <- do.call("rbind", species_ma)
+    p <- ggplot(df)
+    p <- p + geom_point(aes(A, M), alpha=0.05)
+    p <- p + facet_wrap(~ sample_name, ncol=2)
+    p <- p + labs(x="A", y="M")
+    return(p)
+}

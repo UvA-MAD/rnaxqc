@@ -9,7 +9,7 @@ shinyUI(fluidPage(theme="bootstrap.min.css",
             selectInput("species", "RNA species:",
                         species_list),
             conditionalPanel(
-              condition = "input.tabset != 'Density'",
+              condition = "input.tabset == 'Boxplot' | input.tabset == 'PCA'",
               selectInput("group_factor", "Color by:",
                         group_factors)
             ),
@@ -20,8 +20,7 @@ shinyUI(fluidPage(theme="bootstrap.min.css",
                         tabPanel("Boxplot", plotOutput("box")),
                         tabPanel("Density", ggvisOutput("density")),
                         tabPanel("Heatmap", plotOutput("heatmap")),
-                        tabPanel("MA plot", lapply(letters[1:length(samples)], function(l) {
-                                                    ggvisOutput(paste0("ma_", l))})),
+                        tabPanel("MA plot", plotOutput("ma")),
                         tabPanel("PCA",
                                  fluidRow(
                                    column(6, ggvisOutput("pca21")),

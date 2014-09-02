@@ -79,11 +79,9 @@ ma_tables <- lapply(count_tables, function(species_count) {
   for (s in samples) {
     ma_df <- data.frame(M = species_count[[s]] - median_df,
                         A = species_count[[s]] + median_df,
-                        transid = names(median_df),
-                        id = seq_len(length(median_df)))
+                        RNA = names(median_df),
+                        sample_name = s)
     ma_list[[s]] <- ma_df
   }
   return(ma_list)
 })
-
-ma_active = FALSE
