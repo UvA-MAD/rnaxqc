@@ -33,7 +33,11 @@ heatmap1.rnaxqc <- function(counts) {
 }
 
 heatmap2.rnaxqc <-function(counts){
-  heatmap(as.matrix(counts), cexCol=0.7, labRow=NA)
+  top500_names <- apply(counts, 2, function(c) {names(sort(c, decreasing=TRUE)[1:500])})
+  dim(top500_names) <- NULL
+  unique_top_names <- unique(top500_names)
+  unique_top_names <- unique_top_names[!(is.na(unique_top_names))]
+  heatmap(as.matrix(counts[unique_top_names, ]), cexCol=0.7, labRow=NA)
 }
 
 maplot.points.rnaxqc <- function(species_ma) {
@@ -50,6 +54,6 @@ maplot.hexbin.rnaxqc <- function(species_ma) {
   p <- p + stat_binhex(binwidth = c(0.5, 0.5))
   p <- p + facet_wrap(~ sample_name, ncol=2)
   p <- p + labs(x="A", y="M")
-  p <- p + scale_fill_gradientn(trans="log2", colours = rainbow(7))
+  p <- p + scale_fill_gradientn(trans="log10", colours = heat.colors(10, alpha=0.5))
   return(p)
 }
