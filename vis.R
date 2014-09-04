@@ -6,14 +6,14 @@ sample_tooltip <- function(x) {
   paste0("<b>", x$sampleid, "</b>")
 }
 
-boxplot.rnaxqc<- function(count_design, group_factor) {
+boxplot.rnaxqc<- function(count_design, group_factor, species) {
   .e <- environment()
   p <- ggplot(count_design, environment=.e,
               aes(factor(sampleid), count, fill=factor(count_design[, group_factor])))
   p <- p + geom_boxplot(alpha=0.6, outlier.size=1)
   p <- p + guides(fill=guide_legend(title=group_factor))
   p <- p + labs(x="sample", y="counts")
-  p <- p + ggtitle(paste("grouping by", group_factor))
+  p <- p + ggtitle(paste(species, "colored by", group_factor))
   p <- p + theme(axis.text.x = element_text(angle=45, hjust=1))
 
   return(p)
@@ -40,20 +40,22 @@ heatmap2.rnaxqc <-function(counts){
   heatmap(as.matrix(counts[unique_top_names, ]), cexCol=0.7, labRow=NA)
 }
 
-maplot.points.rnaxqc <- function(species_ma) {
+maplot.points.rnaxqc <- function(species_ma, species) {
     p <- ggplot(species_ma)
-    p <- p + geom_point(aes(A, M), alpha=0.05)
+    p <- p + geom_point(aes(A, M), alpha=0.1)
     p <- p + facet_wrap(~ sample_name, ncol=2)
     p <- p + labs(x="A", y="M")
     p <- p +  theme(panel.background=element_rect(fill="white", colour="white"))
+    p <- p + ggtitle(species)
     return(p)
 }
 
-maplot.hexbin.rnaxqc <- function(species_ma) {
+maplot.hexbin.rnaxqc <- function(species_ma, species) {
   p <- ggplot(species_ma, aes(A, M))
   p <- p + stat_binhex(binwidth = c(0.5, 0.5))
   p <- p + facet_wrap(~ sample_name, ncol=2)
   p <- p + labs(x="A", y="M")
   p <- p + scale_fill_gradientn(trans="log10", colours = heat.colors(10, alpha=0.5))
+  p <- p + ggtitle(species)
   return(p)
 }

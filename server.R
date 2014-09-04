@@ -10,7 +10,7 @@ shinyServer(function(input, output, session) {
   # boxplot ###################################################################
   output$box <- renderPlot({
     species_count_design <- count_design_molten[[input$species]]
-    boxplot.rnaxqc(species_count_design, input$group_factor)
+    boxplot.rnaxqc(species_count_design, input$group_factor, input$species)
   })
 
   # density ###################################################################
@@ -39,9 +39,9 @@ shinyServer(function(input, output, session) {
 
   output$ma <- renderPlot({
     if (input$ma_plot_type == "points") {
-      maplot.points.rnaxqc(species_ma())
+      maplot.points.rnaxqc(species_ma(), input$species)
     } else {
-      maplot.hexbin.rnaxqc(species_ma())
+      maplot.hexbin.rnaxqc(species_ma(), input$species)
     }
   }, height=150*length(samples))
 
