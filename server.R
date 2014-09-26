@@ -1,5 +1,5 @@
 library(shiny)
-library(reshape)
+library(reshape2)
 library(ggvis)
 library(hexbin)
 
