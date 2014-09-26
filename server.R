@@ -144,7 +144,8 @@ shinyServer(function(input, output, session) {
                        {selected_design})
     } else {
       output$brushed_design <- renderDataTable(
-        options = list(bPaginate=FALSE, bFilter=FALSE, bSearchable=FALSE, bInfo=FALSE), {})
+        options = list(paging=FALSE, searching=FALSE,
+                       columns.searchable=FALSE, info=FALSE), {})
     }
   })
   ## end PCA ##################################################################
